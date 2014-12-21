@@ -14,7 +14,7 @@ To use it, you will need an OS which can run
 ```
 git clone https://github.com/forcemax/efolder-docker.git
 cd efolder-docker
-sudo docker build -t efolder:base .
+sudo docker build -t efolder:lastest .
 ```
 
 
