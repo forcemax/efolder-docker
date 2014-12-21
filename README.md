@@ -14,7 +14,7 @@ To use it, you will need an OS which can run
 ```
 git clone https://github.com/forcemax/efolder-docker.git
 cd efolder-docker
-docker build -t efolder:base .
+sudo docker build -t efolder:base .
 ```
 
 
@@ -27,7 +27,7 @@ Start a container with this command:
 ```
 or
 ```
-docker run -t -i --name efolder efolder:base
+sudo docker run -t -i --name efolder efolder:base
 ```
 
 
@@ -37,5 +37,5 @@ If you don't want to build your own, you can get the image which I
 have built from the Docker Hub.
 
 ```
-docker pull forcemax/efolder
+sudo docker pull forcemax/efolder
 ```
