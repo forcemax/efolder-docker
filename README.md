@@ -61,6 +61,7 @@ Using web browser
 "http://IPADDRESS/eFolderAdmin/"  
 
 Username : admin
+
 Password : MYPASSWORD (set above)
 
 
