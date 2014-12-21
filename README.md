@@ -58,11 +58,11 @@ Username : admin
 Password : MYPASSWORD (set above)
 
 
-## Using eFolder
+## Using eFolder Client
 
-You can download client from [eFolder Page](http://efolder.embian.com).
+You can download client from [eFolder Site](http://efolder.embian.com).
 
-Set server ip address in login dialog to your server's ip address.
+Set server ip address to your server's ip address in client's login dialog.
   
 
 # Docker Registry Hub
