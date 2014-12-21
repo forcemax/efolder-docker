@@ -25,10 +25,6 @@ Start a container with this command:
 ```
 ./run.sh
 ```
-or
-```
-sudo docker run -t -i --name efolder efolder:base
-```
 
 
 ## Docker Registry Hub
