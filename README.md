@@ -41,10 +41,16 @@ echo "export HOSTIPADDR=\$(/bin/ip route get 8.8.8.8 | /usr/bin/head -1 | /usr/b
 source ~/.bashrc
 ```
 
+Create persistent storage.
+
+```
+sudo mkdir -p /eFolder
+```
+
 Start a container with this command:
 
 ```
-sudo docker run -t -i -p 80:80 -e HOSTIPADDR=$HOSTIPADDR efolder:latest
+sudo docker run -t -i -p 80:80 -e HOSTIPADDR=$HOSTIPADDR -v /eFolder:/eFolder efolder:latest
 ```
 
 
