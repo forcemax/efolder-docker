@@ -7,6 +7,8 @@
 FROM ubuntu:14.04
 MAINTAINER forcemax@gmail.com
 
+VOLUME ["/eFolder"]
+
 # Install apache, mysql, mod-perl, php5
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
@@ -32,7 +34,7 @@ RUN apt-get update \
 		libapache2-mod-php5 \
 		php5-mysql \
 	&& apt-get install -y --no-install-recommends \
-		subversion \
+		git \
 	&& apt-get install -y --no-install-recommends \
 		mysql-server \
 	&& apt-get install -y --no-install-recommends \
@@ -42,10 +44,9 @@ RUN apt-get update \
 	&& rm -r /var/lib/apt/lists/*
 
 RUN mkdir -p /var/log/supervisor
-RUN mkdir -p /eFolder
-RUN chown -R www-data:www-data /eFolder
 
-RUN svn export svn://repo.embian.com/eFolder /app
+RUN git clone https://github.com/forcemax/efolder /app
+RUN rm -rf /app/.git 
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
