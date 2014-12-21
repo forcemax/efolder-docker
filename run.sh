@@ -7,4 +7,4 @@ if [ x"$HOSTIPADDR" = x"" ]; then
 fi
 echo "HOST IP : $HOSTIPADDR"
 
-sudo docker run -p 80:80 -e HOSTIPADDR=$HOSTIPADDR $1 efolder $2
+sudo docker run -p 80:80 -e HOSTIPADDR=$HOSTIPADDR $1 efolder:base $2
