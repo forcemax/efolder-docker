@@ -5,9 +5,7 @@
 
 # Pull base image.
 FROM ubuntu:14.04
-MAINTAINER forcemax@gmail.com
-
-VOLUME ["/eFolder"]
+MAINTAINER Jae-cheol Kim <forcemax@gmail.com>
 
 # Install apache, mysql, mod-perl, php5
 ENV DEBIAN_FRONTEND noninteractive
@@ -59,6 +57,8 @@ COPY sphinx.conf /app/etc/sphinx.conf
 COPY searchd.sh /app/etc/searchd.sh
 COPY ddns.sh /app/etc/ddns.sh
 RUN chmod a+x /app/etc/ddns.sh
+COPY init_db.sh /app/doc/db/init_db.sh
+RUN chmod a+x /app/doc/db/init_db.sh
 COPY setup.php /app/www/eFolderAdmin/Config/setup.php
 COPY EmbianSoapHandler.pm /app/src/EmbianSoap/EmbianSoapHandler.pm
 COPY CONFIG.pm /app/src/FTPService/lib/perl/eFolder/CONFIG.pm
@@ -67,18 +67,9 @@ RUN echo "" >> /etc/crontab
 RUN echo "36 4 * * * root ( cd /app/etc ; bash makeSphinxIndex.sh all 2> /dev/null > /dev/null )" >> /etc/crontab
 RUN echo "* * * * * root ( cd /app/etc ; bash makeSphinxIndex.sh delta 2> /dev/null > /dev/null )" >> /etc/crontab
 
-RUN service mysql start \
-	&& mysqladmin -uroot password OWNMYSQLDBPASSWORD \
-	&& mysqladmin -uroot -pOWNMYSQLDBPASSWORD create eAccountManager \
-	&& mysqladmin -uroot -pOWNMYSQLDBPASSWORD create eFolder \
-	&& mysqladmin -uroot -pOWNMYSQLDBPASSWORD create rss \
-	&& mysql -uroot -pOWNMYSQLDBPASSWORD eAccountManager < /app/doc/db/eAccountManager.sql \
-	&& mysql -uroot -pOWNMYSQLDBPASSWORD eFolder < /app/doc/db/eFolder.sql \
-	&& mysql -uroot -pOWNMYSQLDBPASSWORD rss < /app/doc/db/rss.sql \
-	&& mysql -uroot -pOWNMYSQLDBPASSWORD < /app/doc/db/uas.sql \
-	&& service mysql stop
-
 RUN ln -fs /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+
+VOLUME ["/eFolder", "/var/lib/mysql"]
 
 EXPOSE 80
 CMD ["/usr/bin/supervisord"]

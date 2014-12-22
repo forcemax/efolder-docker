@@ -27,7 +27,7 @@ sed -i "s/test/MYPASSWORD/g" setup.php
 Build image
 
 ```
-sudo docker build -t efolder:latest .
+sudo docker build -t forcemax/efolder:latest .
 ```
 
 
@@ -41,16 +41,25 @@ echo "export HOSTIPADDR=\$(/bin/ip route get 8.8.8.8 | /usr/bin/head -1 | /usr/b
 source ~/.bashrc
 ```
 
-Create persistent storage.
+Start data volume container for persistent data.
 
 ```
-sudo mkdir -p /eFolder
+sudo docker run -i -t --name efolder_mysql_data -v /var/lib/mysql -v /eFolder busybox /bin/sh
+exit
+```
+
+Initialize database with this command:
+
+```
+sudo docker run -t -i --volumes-from efolder_mysql_data forcemax/efolder:latest /bin/bash
+/app/doc/db/init_db.sh
+exit
 ```
 
 Start a container with this command:
 
 ```
-sudo docker run -t -i -p 80:80 -e HOSTIPADDR=$HOSTIPADDR -v /eFolder:/eFolder efolder:latest
+sudo docker run -d -p 80:80 -e HOSTIPADDR=$HOSTIPADDR --volumes-from efolder_mysql_data forcemax/efolder:latest
 ```
 
 
